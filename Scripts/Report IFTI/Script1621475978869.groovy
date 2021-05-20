@@ -16,6 +16,7 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.webui.keyword.builtin.ScrollToElementKeyword as ScrollToElementKeyword
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import com.nawadata.nfUnitTestLibrary.WebDriverWrapper as WebDriverWrapper
@@ -66,6 +67,8 @@ if (JenisLaporan == 'Incoming Bank') {
     WebUI.click(findTestObject('Frame 2/TKLOB'))
 }
 
+WebUI.delay(2)
+
 def driver = DriverFactory.getWebDriver()
 
 def driverExt = new WebDriverWrapper(driver)
@@ -73,6 +76,8 @@ def driverExt = new WebDriverWrapper(driver)
 driver = driverExt.WaituntilFrameLoads(By.xpath('//iframe[contains(@class, \'x-component\')]'))
 
 def inputHelper = new InputFillerHelper(driver)
+
+WebUI.delay(2)
 
 inputHelper.GetInputFromLabel('Transaksi Unik').ShouldBe().Dropdown().SelectElementFromText(TransaksiUnik)
 
@@ -82,19 +87,9 @@ inputHelper.GetInputFromLabel('Alasan').ShouldBe().Textbox().SendText('Tidak Ber
 
 inputHelper.GetInputFromLabel('Tindakan Pelapor').ShouldBe().Textbox().SendText('Pelapor Tidak Bertindak')
 
-driver = driver.switchTo().defaultContent()
+inputHelper.ClickButtonWithText('Tambah Transaksi')
 
-WebUI.scrollToElement(findTestObject('Frame 2/TambahTransaksi'), 2)
-
-WebUI.click(findTestObject('Frame 2/TambahTransaksi'))
-
-driver = DriverFactory.getWebDriver()
-
-driverExt = new WebDriverWrapper(driver)
-
-driver = driverExt.WaituntilFrameLoads(By.xpath('//iframe[contains(@class, \'x-component\')]'))
-
-inputHelper = new InputFillerHelper(driver)
+WebUI.delay(5)
 
 inputHelper.GetInputFromLabel('Nomor Transaksi').ShouldBe().Textbox().SendText('12133746')
 
@@ -104,19 +99,51 @@ inputHelper.GetInputFromLabel('Lokasi Transaksi').ShouldBe().Textbox().SendText(
 
 inputHelper.GetInputFromLabel('Keterangan Transaksi').ShouldBe().Textbox().SendText('Tanpa Keterangan')
 
-inputHelper.GetInputFromLabel('Tanggal Transaksi').ShouldBe().Date().SendText('01-Jan-21')
+inputHelper.GetInputFromLabel('Tanggal Transaksi').ShouldBe().Date().SendText('01-01-2021')
 
 inputHelper.GetInputFromLabel('Nama Teller / Petugas Front Office').ShouldBe().Textbox().SendText('Mr Teller')
 
 inputHelper.GetInputFromLabel('Nama Pejabat Pengotorisasi Transaksi').ShouldBe().Textbox().SendText('Mr Bro')
 
-inputHelper.GetInputFromLabel('Tanggal Pembukuan').ShouldBe().Textbox().Date('04-Feb-21')
+inputHelper.GetInputFromLabel('Tanggal Pembukuan').ShouldBe().Date().SendText('01-02-2021')
 
 inputHelper.GetInputFromLabel('Cara Transaksi Dilakukan').ShouldBe().Dropdown().SelectElementFromText(CaraTransaksiDilakukan)
 
-inputHelper.GetInputFromLabel('Cara Transaksi Lain').ShouldBe().Textbox().SendText('Tidak ada')
-
-inputHelper.GetInputFromLabel('Nilai Transaksi(IDR)').ShouldBe().Textbox().SendText('9000000')
-
 driver = driver.switchTo().defaultContent()
+
+WebUI.scrollToElement(findTestObject('Frame 3/Kurs'), 3)
+
+WebUI.setText(findTestObject('Frame 3/Nilai Transaksi'), NilaiTransaksi)
+
+if (FromMyClient == 'yes') {
+    WebUI.check(findTestObject('Frame 3/FromMyClient'))
+} else if (FromMyClient == 'no'){
+    WebUI.uncheck(findTestObject('Frame 3/FromMyClient'))
+}
+
+WebUI.setText(findTestObject('Frame 3/Instrumen Transaksi Asal'), InstrumenTransaksiAsal)
+
+WebUI.delay(1)
+
+WebUI.sendKeys(findTestObject('Frame 3/Instrumen Transaksi Asal'), Keys.chord(Keys.ENTER))
+
+WebUI.delay(1)
+
+WebUI.click(findTestObject('Frame 3/Negara Transaksi Asal TGR'), FailureHandling.STOP_ON_FAILURE)
+
+WebUI.delay(1)
+
+WebUI.click(findTestObject('Frame 3/Negara Transaksi Asal Filter'), FailureHandling.STOP_ON_FAILURE)
+
+WebUI.setText(findTestObject('Frame 3/Negara Transaksi Asal Filter'), 'ID')
+
+WebUI.delay(2)
+
+WebUI.click(findTestObject('Frame 3/Negara Transaksi Asal U1'))
+
+WebUI.delay(2)
+
+if (InformasiPengirim == 'Account') {
+    WebUI.callTestCase(findTestCase('Account'), [:], FailureHandling.STOP_ON_FAILURE)
+}
 

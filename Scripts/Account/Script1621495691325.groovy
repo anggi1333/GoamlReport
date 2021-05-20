@@ -36,9 +36,21 @@ import org.openqa.selenium.interactions.Actions as Actions
 import org.openqa.selenium.support.ui.ExpectedConditions as ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait as WebDriverWait
 
-WebUI.scrollToElement(findTestObject('Frame 2/TambahTransaksi'), 2)
+WebUI.delay(1)
 
-WebUI.click(findTestObject('Frame 2/TambahTransaksi'))
+WebUI.click(findTestObject('Frame 3/Sender To Information TGR'))
+
+WebUI.delay(1)
+
+WebUI.click(findTestObject('Frame 3/Sender To Information Filter'))
+
+WebUI.setText(findTestObject('Frame 3/Sender To Information Filter'), 'Account')
+
+WebUI.delay(1)
+
+WebUI.click(findTestObject('Frame 3/Sender To Information U1'))
+
+WebUI.delay(2)
 
 def driver = DriverFactory.getWebDriver()
 
@@ -48,26 +60,34 @@ driver = driverExt.WaituntilFrameLoads(By.xpath('//iframe[contains(@class, \'x-c
 
 def inputHelper = new InputFillerHelper(driver)
 
-inputHelper.GetInputFromLabel('Nomor Transaksi').ShouldBe().Textbox().SendText('12133746')
+WebUI.delay(2)
 
-inputHelper.GetInputFromLabel('No Ref Transaksi').ShouldBe().Textbox().SendText('118811')
+inputHelper.GetInputFromLabel('Nama PJK').ShouldBe().Textbox().SendText('Pejeka')
+inputHelper.GetInputFromLabel('Kode PJK').ShouldBe().Textbox().SendText('1122')
+inputHelper.GetInputFromLabel('Kode Swift').ShouldBe().Textbox().SendText('062')
+inputHelper.GetInputFromLabel('Kantor Pembukaan Rekening').ShouldBe().Textbox().SendText('Jakarta')
+inputHelper.GetInputFromLabel('No Rekening').ShouldBe().Textbox().SendText('11135490')
+inputHelper.GetInputFromLabel('Tanggal Pembukaan Rekening').ShouldBe().Date().SendText('01-01-2012')
+WebUI.delay(2)
+driver = driver.switchTo().defaultContent()
 
-inputHelper.GetInputFromLabel('Lokasi Transaksi').ShouldBe().Textbox().SendText('Jakarta')
+driver = DriverFactory.getWebDriver()
 
-inputHelper.GetInputFromLabel('Keterangan Transaksi').ShouldBe().Textbox().SendText('Tanpa Keterangan')
+driverExt = new WebDriverWrapper(driver)
 
-inputHelper.GetInputFromLabel('Tanggal Transaksi').ShouldBe().Date().SendText('01-Jan-21')
+driver = driverExt.WaituntilFrameLoads(By.xpath('//iframe[contains(@class, \'x-component\')]'))
 
-inputHelper.GetInputFromLabel('Nama Teller / Petugas Front Office').ShouldBe().Textbox().SendText('Mr Teller')
+inputHelper = new InputFillerHelper(driver)
 
-inputHelper.GetInputFromLabel('Nama Pejabat Pengotorisasi Transaksi').ShouldBe().Textbox().SendText('Mr Bro')
-
-inputHelper.GetInputFromLabel('Tanggal Pembukuan').ShouldBe().Textbox().Date('04-Feb-21')
-
-inputHelper.GetInputFromLabel('Cara Transaksi Dilakukan').ShouldBe().Dropdown().SelectElementFromText(CaraTransaksiDilakukan)
-
-inputHelper.GetInputFromLabel('Cara Transaksi Lain').ShouldBe().Textbox().SendText('Tidak ada')
-
-inputHelper.GetInputFromLabel('Nilai Transaksi(IDR)').ShouldBe().Textbox().SendText('9000000')
-
+//inputHelper.GetInputFromLabel('Tanggal Penutupan Rekening').ShouldBe().Date().SendText('01-01-2021')
+//inputHelper.GetInputFromLabel('Tanggal Saldo').ShouldBe().Date().SendText('02-03-2021')
+inputHelper.ClickButtonWithText('Tambah Signatory')
+WebUI.delay(5)
+inputHelper.GetInputFromLabel('Gelar').ShouldBe().Textbox().SendText('MR.')
+inputHelper.GetInputFromLabel('Nama Lengkap').ShouldBe().Textbox().SendText('Anggi Firmansah')
+inputHelper.GetInputFromLabel('Tanggal Lahir').ShouldBe().Date().SendText('11-11-1991')
+inputHelper.GetInputFromLabel('Tempat Lahir').ShouldBe().Textbox().SendText('Jakarta')
+inputHelper.ClickButtonWithText('Tambah Telepon')
+WebUI.delay(5)
+inputHelper.ClickButtonWithText('Save')
 driver = driver.switchTo().defaultContent()

@@ -26,4 +26,32 @@
       <masked>false</masked>
       <name>CaraTransaksiDilakukan</name>
    </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>9a30fe35-5b53-4516-9ae4-1fe438e3c0db</id>
+      <masked>false</masked>
+      <name>FromMyClient</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>c6c1eb51-596c-4311-9289-a341b2e0f0b7</id>
+      <masked>false</masked>
+      <name>InstrumenTransaksiAsal</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>509b586e-a75c-445b-bc63-0db3e3c41d39</id>
+      <masked>false</masked>
+      <name>NilaiTransaksi</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>023d7ab1-cc76-4c25-a82e-5b4dc334c871</id>
+      <masked>false</masked>
+      <name>InformasiPengirim</name>
+   </variable>
 </TestCaseEntity>
