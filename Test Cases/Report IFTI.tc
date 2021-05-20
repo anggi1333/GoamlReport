@@ -5,4 +5,25 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>99c57ed1-c5e8-4717-9a04-3192ae4fa83f</testCaseGuid>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>2c114bff-c44a-4186-a587-4fc0cd3677f2</id>
+      <masked>false</masked>
+      <name>JenisLaporan</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>46262598-f969-4e31-8b0d-649112573812</id>
+      <masked>false</masked>
+      <name>TransaksiUnik</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>a2bb3340-4a87-4178-82d9-f7a2e85654fb</id>
+      <masked>false</masked>
+      <name>CaraTransaksiDilakukan</name>
+   </variable>
 </TestCaseEntity>

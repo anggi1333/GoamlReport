@@ -36,35 +36,9 @@ import org.openqa.selenium.interactions.Actions as Actions
 import org.openqa.selenium.support.ui.ExpectedConditions as ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait as WebDriverWait
 
-WebUI.openBrowser('http://goaml.southeastasia.cloudapp.azure.com/goaml/Login.aspx?ReturnUrl=%2fgoaml%2fDefault.aspx')
+WebUI.scrollToElement(findTestObject('Frame 2/TambahTransaksi'), 2)
 
-WebUI.maximizeWindow()
-
-WebUI.setText(findTestObject('Frame 1/Username'), 'anggi1')
-
-WebUI.setEncryptedText(findTestObject('Frame 1/Password'), 'iFGeFYmXIrUhQZHvW7P22w==')
-
-WebUI.sendKeys(findTestObject('Frame 1/Password'), Keys.chord(Keys.ENTER))
-
-WebUI.delay(2)
-
-WebUI.setText(findTestObject('Frame 1/Filter'), 'ifti')
-
-WebUI.delay(2)
-
-WebUI.click(findTestObject('Frame 1/View IFTI'))
-
-WebUI.click(findTestObject('Frame 1/add new record'))
-
-WebUI.delay(8)
-
-WebUI.click(findTestObject('Frame 2/Jenis Laporan TGR'))
-
-if (JenisLaporan == 'Incoming Bank') {
-    WebUI.click(findTestObject('Frame 2/TKLIB'))
-} else if (JenisLaporan == 'Outgoing Bank') {
-    WebUI.click(findTestObject('Frame 2/TKLOB'))
-}
+WebUI.click(findTestObject('Frame 2/TambahTransaksi'))
 
 def driver = DriverFactory.getWebDriver()
 
@@ -73,28 +47,6 @@ def driverExt = new WebDriverWrapper(driver)
 driver = driverExt.WaituntilFrameLoads(By.xpath('//iframe[contains(@class, \'x-component\')]'))
 
 def inputHelper = new InputFillerHelper(driver)
-
-inputHelper.GetInputFromLabel('Transaksi Unik').ShouldBe().Dropdown().SelectElementFromText(TransaksiUnik)
-
-inputHelper.GetInputFromLabel('Value Transaksi Unik').ShouldBe().Textbox().SendText('Transaksi IFTI')
-
-inputHelper.GetInputFromLabel('Alasan').ShouldBe().Textbox().SendText('Tidak Beralasan')
-
-inputHelper.GetInputFromLabel('Tindakan Pelapor').ShouldBe().Textbox().SendText('Pelapor Tidak Bertindak')
-
-driver = driver.switchTo().defaultContent()
-
-WebUI.scrollToElement(findTestObject('Frame 2/TambahTransaksi'), 2)
-
-WebUI.click(findTestObject('Frame 2/TambahTransaksi'))
-
-driver = DriverFactory.getWebDriver()
-
-driverExt = new WebDriverWrapper(driver)
-
-driver = driverExt.WaituntilFrameLoads(By.xpath('//iframe[contains(@class, \'x-component\')]'))
-
-inputHelper = new InputFillerHelper(driver)
 
 inputHelper.GetInputFromLabel('Nomor Transaksi').ShouldBe().Textbox().SendText('12133746')
 
@@ -119,4 +71,3 @@ inputHelper.GetInputFromLabel('Cara Transaksi Lain').ShouldBe().Textbox().SendTe
 inputHelper.GetInputFromLabel('Nilai Transaksi(IDR)').ShouldBe().Textbox().SendText('9000000')
 
 driver = driver.switchTo().defaultContent()
-
